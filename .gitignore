@@ -1,0 +1,12 @@
+# Raw downloaded datasets (large files)
+data/
+*.zip
+*.tsv
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+
+# OS files
+Thumbs.db
+.DS_Store

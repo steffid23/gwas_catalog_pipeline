@@ -1,0 +1,32 @@
+{
+  "dataset_statistics": {
+    "total_gwas_catalog_records": 1191572,
+    "records_with_numeric_raf": 575408,
+    "records_with_raf_0.5_to_2.0_pct": 30959,
+    "total_european_records": 1101993,
+    "total_south_asian_records": 267018,
+    "total_multi_ancestry_both_records": 262153
+  },
+  "analysis_1_low_frequency_cohort": {
+    "filtered_records_count": 28679,
+    "filtered_eur_records": 28629,
+    "filtered_sas_records": 2990,
+    "filtered_both_records": 2940,
+    "unique_variants_count": 19698,
+    "unique_diseases_count": 5337,
+    "total_unique_eur_genes": 11969,
+    "total_unique_sas_genes": 1451,
+    "low_freq_shared_genes": 1432,
+    "low_freq_eur_only_genes": 10537,
+    "low_freq_sas_only_genes": 19
+  },
+  "analysis_2_full_catalog_gene_disease_mapping": {
+    "total_unique_mapped_genes": 30238,
+    "total_unique_diseases_traits": 40201,
+    "full_catalog_eur_genes": 30187,
+    "full_catalog_sas_genes": 20977,
+    "full_catalog_shared_genes": 20926,
+    "full_catalog_eur_only_genes": 9261,
+    "full_catalog_sas_only_genes": 51
+  }
+}
