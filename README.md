@@ -29,7 +29,7 @@ nextflow run main.nf -profile docker
 
 ---
 
-## 📌 Project Objectives
+## Project Objectives
 
 1. **Programmatic Data Acquisition**: Automatically fetch the latest complete GWAS Catalog association and ancestry datasets using Python HTTP stream tools.
 2. **Nextflow Workflow Orchestration**: Execute pipeline processes modularly using Nextflow DSL2 (`main.nf`) calling Python CLI scripts in `bin/`.
@@ -40,7 +40,7 @@ nextflow run main.nf -profile docker
 
 ---
 
-## 🗂️ Data Source & Automated Download
+## Data Source & Automated Download
 
 The pipeline ingests data directly from the official EBI FTP repository:
 - **Association Dataset**: `gwas-catalog-associations-full.zip` (~66.2 MB compressed, containing `gwas-catalog-download-associations-v1.0-full.tsv`).
@@ -50,7 +50,7 @@ Data download is handled programmatically via `bin/download_data.py` with HTTP s
 
 ---
 
-## 📋 Documented Column Schematic
+## Documented Column Schematic
 
 | Category | Primary Columns | Description |
 | :--- | :--- | :--- |
@@ -64,7 +64,7 @@ Data download is handled programmatically via `bin/download_data.py` with HTTP s
 
 ---
 
-## 🔬 Methodology & Filtering Decisions
+## Methodology & Filtering Decisions
 
 ### 1. Risk Allele Frequency (RAF) Standardizing
 - Non-numeric placeholders (e.g., `'NR'`, blanks) are explicitly identified and converted to `NaN`.
@@ -81,7 +81,7 @@ When `MAPPED_GENE` or `REPORTED GENE(S)` contains multiple comma-, semicolon-, o
 
 ---
 
-## 📊 Empirical Findings & Result Summary
+## Empirical Findings & Result Summary
 
 All metrics are calculated directly from the downloaded GWAS Catalog dataset:
 
@@ -119,7 +119,7 @@ All metrics are calculated directly from the downloaded GWAS Catalog dataset:
 
 ---
 
-## 📈 Publication Figures
+## Publication Figures
 
 ### Figure 1: Allele-Frequency Distribution & Comparison (`plots/allele_freq_distribution.png`)
 Dual-panel plot showing:
@@ -133,7 +133,7 @@ Dual-panel plot showing:
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 gwas_catalog_pipeline/
@@ -160,7 +160,7 @@ gwas_catalog_pipeline/
 
 ---
 
-## 🚀 Reproduction Instructions
+## Reproduction Instructions
 
 ### 1. Environment Setup
 Clone the repository and ensure Python 3.10+ and Nextflow are installed:
