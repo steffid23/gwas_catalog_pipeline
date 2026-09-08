@@ -10,7 +10,7 @@ This project analyzes over **1.19 million GWAS catalog records** to evaluate **l
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Option 1: Run with Nextflow DSL2
 ```bash
