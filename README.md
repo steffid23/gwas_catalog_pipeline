@@ -1,18 +1,42 @@
-# NHGRI-EBI GWAS Catalog Population Genetics & Gene-Disease Pipeline
+# NHGRI-EBI GWAS Catalog Pipeline (Python & Nextflow DSL2)
 
-A reproducible, high-performance Python analysis pipeline designed to query, process, filter, and visualize cross-ancestry association data from the official [NHGRI-EBI GWAS Catalog](https://www.ebi.ac.uk/gwas/).
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
+![Nextflow](https://img.shields.io/badge/Nextflow-DSL2-green?logo=nextflow)
+![License](https://img.shields.io/badge/License-MIT-brightgreen)
+
+A reproducible, production-ready **Python and Nextflow DSL2 pipeline** designed to query, process, filter, and visualize cross-ancestry association data from the official [NHGRI-EBI GWAS Catalog](https://www.ebi.ac.uk/gwas/).
 
 This project analyzes over **1.19 million GWAS catalog records** to evaluate **low-frequency variants (0.5% – 2.0% Risk Allele Frequency)** across **European (EUR)** and **South Asian (SAS)** populations, and maps the cross-ancestry gene-disease landscape.
 
 ---
 
+## ⚡ Quick Start
+
+### Option 1: Run with Nextflow DSL2
+```bash
+nextflow run main.nf
+```
+
+### Option 2: Run with Python Engine directly
+```bash
+python run_pipeline.py
+```
+
+### Option 3: Run with Docker / Singularity
+```bash
+nextflow run main.nf -profile docker
+```
+
+---
+
 ## 📌 Project Objectives
 
-1. **Programmatic Data Acquisition**: Automatically fetch the latest complete GWAS Catalog association and ancestry datasets.
-2. **Schema & Column Documentation**: Explicitly document and categorize catalog fields spanning variants, genes, allele frequencies, ancestral populations, diseases/traits, genomic positions, and study metadata.
-3. **Low-Frequency Variant Filtering (Analysis 1)**: Isolate associations with Risk Allele Frequency (RAF) between **0.5% and 2.0% inclusive** ($0.005 \le \text{RAF} \le 0.020$) specifically for European and South Asian populations.
-4. **Gene-Disease-Population Mapping (Analysis 2)**: Identify unique genes associated with traits/diseases and map them to population cohorts, delineating **European-specific**, **South Asian-specific**, and **Shared (Both)** genes.
-5. **Publication-Quality Visualization**: Generate high-resolution figures illustrating allele frequency distributions and population-gene-disease landscapes.
+1. **Programmatic Data Acquisition**: Automatically fetch the latest complete GWAS Catalog association and ancestry datasets using Python HTTP stream tools.
+2. **Nextflow Workflow Orchestration**: Execute pipeline processes modularly using Nextflow DSL2 (`main.nf`) calling Python CLI scripts in `bin/`.
+3. **Schema & Column Documentation**: Explicitly document and categorize catalog fields spanning variants, genes, allele frequencies, ancestral populations, diseases/traits, genomic positions, and study metadata.
+4. **Low-Frequency Variant Filtering (Analysis 1)**: Isolate associations with Risk Allele Frequency (RAF) between **0.5% and 2.0% inclusive** ($0.005 \le \text{RAF} \le 0.020$) specifically for European and South Asian populations.
+5. **Gene-Disease-Population Mapping (Analysis 2)**: Identify unique genes associated with traits/diseases and map them to population cohorts, delineating **European-specific**, **South Asian-specific**, and **Shared (Both)** genes.
+6. **Publication-Quality Visualization**: Generate 300 DPI figures illustrating allele frequency distributions and population-gene-disease landscapes.
 
 ---
 
@@ -22,7 +46,7 @@ The pipeline ingests data directly from the official EBI FTP repository:
 - **Association Dataset**: `gwas-catalog-associations-full.zip` (~66.2 MB compressed, containing `gwas-catalog-download-associations-v1.0-full.tsv`).
 - **Ancestry Dataset**: `gwas-catalog-ancestry.tsv` (~49.2 MB, containing study-level curated sample and ancestry metadata).
 
-Data download is handled programmatically via `download_data.py` with HTTP streaming, size verification, and caching to avoid redundant network calls.
+Data download is handled programmatically via `bin/download_data.py` with HTTP streaming, size verification, and caching to avoid redundant network calls.
 
 ---
 
@@ -113,10 +137,16 @@ Dual-panel plot showing:
 
 ```
 gwas_catalog_pipeline/
-├── data/                                 # Raw dataset storage
-│   ├── gwas_catalog_associations.zip     # Downloaded associations ZIP
-│   └── gwas_catalog_ancestry.tsv         # Downloaded study ancestry TSV
-├── results/                              # Processed analytical outputs
+├── bin/                                 # Executable Python CLI scripts invoked by Nextflow
+│   ├── download_data.py
+│   ├── gwas_pipeline.py
+│   └── plot_generator.py
+├── main.nf                              # Nextflow DSL2 workflow
+├── nextflow.config                      # Nextflow configuration parameters
+├── run_pipeline.py                      # Standalone Python entrypoint
+├── run_pipeline.sh                      # Standalone Bash entrypoint
+├── data/                                # Raw dataset storage
+├── results/                             # Processed analytical outputs
 │   ├── low_freq_variants_eur_sas.csv     # Filtered variant table (0.5% - 2.0% RAF)
 │   ├── gene_population_trait_mapping.csv # Mapped gene table with ancestry breakdown
 │   ├── population_trait_summary.csv      # Disease/trait summary by population
@@ -124,12 +154,8 @@ gwas_catalog_pipeline/
 ├── plots/                                # Publication-grade figures
 │   ├── allele_freq_distribution.png
 │   └── gene_disease_population_landscape.png
-├── download_data.py                      # Programmatic downloader script
-├── gwas_pipeline.py                      # Core ETL & analysis engine
-├── plot_generator.py                     # Publication plotting module
-├── run_pipeline.py                       # Master execution entrypoint
-├── requirements.txt                      # Dependencies
-└── README.md                             # Documentation
+├── requirements.txt                     # Python dependencies
+└── README.md                            # Documentation
 ```
 
 ---
@@ -137,26 +163,19 @@ gwas_catalog_pipeline/
 ## 🚀 Reproduction Instructions
 
 ### 1. Environment Setup
-Clone the repository and ensure Python 3.10+ is installed:
+Clone the repository and ensure Python 3.10+ and Nextflow are installed:
 ```bash
-git clone https://github.com/your-username/gwas_catalog_pipeline.git
+git clone https://github.com/steffid23/gwas_catalog_pipeline.git
 cd gwas_catalog_pipeline
-```
-
-### 2. Install Dependencies
-Install required packages via `pip`:
-```bash
 pip install -r requirements.txt
 ```
 
-### 3. Execute Pipeline
-Run the master pipeline script:
+### 2. Execute Nextflow Workflow
+```bash
+nextflow run main.nf
+```
+
+### 3. Execute Standalone Python Pipeline
 ```bash
 python run_pipeline.py
 ```
-This script will automatically:
-1. Download datasets to `data/` (if not already cached).
-2. Execute data loading, column schema inspection, and RAF parsing.
-3. Perform Analysis 1 (low-frequency variant filtering) and Analysis 2 (gene-disease-population mapping).
-4. Save result tables in `results/`.
-5. Render 300 DPI publication plots in `plots/`.
