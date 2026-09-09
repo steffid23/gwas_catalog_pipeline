@@ -1,0 +1,3 @@
+# GitHub Linguist language detection overrides
+*.nf linguist-language=Nextflow
+nextflow.config linguist-language=Nextflow
